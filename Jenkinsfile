@@ -1,6 +1,6 @@
 node('golang') {
 	def root = tool name: 'Go 1.7.5', type: 'go'
-	def version = '0.1.1'
+	def version = '0.1.2'
 
 	checkout([$class: 'GitSCM',
 		branches: [[name: '*/master']], 
@@ -14,6 +14,12 @@ node('golang') {
 			sh 'go version'
 			sh 'cd $WORKSPACE/src/github.com/csduarte/mattermost-probe && glide install'
 			sh 'if [[ ! -d $WORKSPACE/bin ]]; then mkdir $WORKSPACE/bin; fi; if [[ ! -d $WORKSPACE/pkg ]]; then mkdir $WORKSPACE/pkg; fi'
+		}
+	}
+
+	stage('test') {
+		withEnv(["GOROOT=${root}", "GOPATH=${WORKSPACE}", "PATH+GO=${root}/bin"]) {
+			sh 'cd $WORKSPACE && go test github.com/csduarte/mattermost-probe/mattermost'
 		}
 	}
 
