@@ -1,6 +1,6 @@
 node('golang') {
 	def root = tool name: 'Go 1.7.5', type: 'go'
-	def version = '0.1.3'
+	def version = '0.1.4'
 
 	checkout([$class: 'GitSCM',
 		branches: [[name: '*/master']], 
