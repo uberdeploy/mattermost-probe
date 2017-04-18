@@ -1,6 +1,6 @@
 node('golang') {
-	def root = tool name: 'Go 1.7.5', type: 'go'
-	def version = '0.1.4'
+	def root = tool name: 'Go 1.8.1', type: 'go'
+	def version = '0.1.5'
 
 	checkout([$class: 'GitSCM',
 		branches: [[name: '*/master']], 
@@ -30,7 +30,16 @@ node('golang') {
 	}
 
 	stage('publish') {
-		nexusArtifactUploader artifacts: [[artifactId: 'mattermost-probe', classifier: '', file: 'mattermost-probe', type: 'bin']], credentialsId: 'nexus-deploy', groupId: 'com.github.uberdeploy.mattermost-probe', nexusUrl: 'nexus:8081', nexusVersion: 'nexus3', protocol: 'http', repository: 'maven-releases', version: version
+		nexusArtifactUploader artifacts: [[ artifactId: 'mattermost-probe',
+											classifier: '',
+											file: 'mattermost-probe',
+											type: 'bin' ]],
+							  credentialsId: 'nexus-deploy',
+							  groupId: 'com.github.uberdeploy.mattermost-probe',
+							  nexusUrl: 'nexus.test',
+							  nexusVersion: 'nexus3',
+							  protocol: 'https',
+							  repository: 'maven-releases',
+							  version: version
 	}
 }
-
