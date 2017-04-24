@@ -36,7 +36,7 @@ node('golang') {
 											type: 'bin' ]],
 							  credentialsId: 'nexus-deploy',
 							  groupId: 'com.github.uberdeploy.mattermost-probe',
-							  nexusUrl: 'nexus.test',
+							  nexusUrl: 'nexus',
 							  nexusVersion: 'nexus3',
 							  protocol: 'https',
 							  repository: 'maven-releases',
